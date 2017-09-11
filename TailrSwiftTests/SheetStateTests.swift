@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import TailrSwift
+@testable import TailrSwift
 
 class SheetStateTests: XCTestCase {
 
@@ -23,10 +23,9 @@ class SheetStateTests: XCTestCase {
     
     func testConstructorSetsRowsAndColumns() {
         // This is an example of a functional test case.
-        let sheetState = SheetState(rows: 7, columns: 13)
-        
-        XCTAssertEqualObjects(sheetState.rows, 7)
-        XCTAssertEqualObjects(sheetState.columns, 13)
+        let sheetState = TailrSwift.SheetState(rows: 7, columns: 13)
+        XCTAssertEqual(sheetState.rows, 7)
+        XCTAssertEqual(sheetState.columns, 13)
     }
     
     func testAllCellsAreDeactivatedByDefault() {

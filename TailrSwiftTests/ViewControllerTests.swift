@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import TailrSwift
+@testable import TailrSwift
 
 class ViewControllerTests: XCTestCase {
 
@@ -26,7 +26,7 @@ class ViewControllerTests: XCTestCase {
         let (rowIndex, colIndex) = viewController.translateStateIndex(16)
         
         // Assumes columns = 10, and rows > 1
-        XCTAssertEqualObjects(rowIndex, 1, "Should be row index 1")
-        XCTAssertEqualObjects(colIndex, 7, "Should be col index 7")
+        XCTAssertEqual(rowIndex, 1, "Should be row index 1")
+        XCTAssertEqual(colIndex, 7, "Should be col index 7")
     }
 }

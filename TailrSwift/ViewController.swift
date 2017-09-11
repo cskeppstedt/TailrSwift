@@ -18,12 +18,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     override func viewDidLoad() {
         super.viewDidLoad()
         sheetState.activate(3, columnIndex: 5)
-        collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: self.cellIdentifier)
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: self.cellIdentifier as String)
         
         // Do any additional setup after loading the view, typically from a nib.
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         collectionViewLayout.invalidateLayout()
     }
@@ -33,13 +33,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // Dispose of any resources that can be recreated.
     }
     
-    func toggleCell(itemIndex: Int) {
+    func toggleCell(_ itemIndex: Int) {
         let (rowIndex, columnIndex) = self.translateStateIndex(itemIndex)
         sheetState.toggle(rowIndex, columnIndex: columnIndex)
         self.collectionView.reloadData()
     }
     
-    func translateStateIndex(itemIndex: Int) -> (Int, Int) {
+    func translateStateIndex(_ itemIndex: Int) -> (Int, Int) {
         let rowIndex    = itemIndex / sheetState.columns
         let columnIndex = itemIndex % sheetState.columns
         
@@ -48,18 +48,18 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
     //UICollectionViewDataSource
     
-    func collectionView(collectionView: UICollectionView!, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return sheetState.totalCells
     }
     
     // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-    func collectionView(collectionView: UICollectionView!, cellForItemAtIndexPath indexPath: NSIndexPath!) -> UICollectionViewCell! {
-        let cell:UICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(self.cellIdentifier, forIndexPath: indexPath) as UICollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell:UICollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellIdentifier as String, for: indexPath) as UICollectionViewCell
         
         let (rowIndex, columnIndex) = self.translateStateIndex(indexPath.item)
         
         if sheetState.isActive(rowIndex, columnIndex: columnIndex) {
-            cell.backgroundColor = UIColor.orangeColor()	
+            cell.backgroundColor = UIColor.orange	
         } else {
             cell.backgroundColor = UIColor(red: 240/255.0, green: 230/255.0, blue: 210/255.0, alpha: 1.0)
         }
@@ -69,11 +69,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     //UICollectionViewDelegate
     
-    func collectionView(collectionView: UICollectionView!, didSelectItemAtIndexPath indexPath: NSIndexPath!) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.toggleCell(indexPath.item)
     }
     
-    func collectionView(collectionView: UICollectionView!, didDeselectItemAtIndexPath indexPath: NSIndexPath!) {
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         self.toggleCell(indexPath.item)
     }
 }
